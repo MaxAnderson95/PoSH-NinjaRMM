@@ -41,4 +41,3 @@ These future hopefulls are dependent upon the NinjaAPI (which is in beta) releas
 1. Run the cmdlet "Set-NinjaAPIKeys -AccessKeyID [Your access key] -SecretAccessKey [Secret access key]" This will program the keys into a local registry entry.
 ![](https://i.imgur.com/O1aO0hh.png)
 1. You can verify that the keys have been saved in the registry by running "Get-NinjaAPIKeys". If the keys appear, then you're now able to run management cmdlets and they will automatically use these keys. If you'd like to remove the keys, please use "Remove-NinjaAPIKeys".
-1.
