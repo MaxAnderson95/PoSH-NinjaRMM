@@ -5,6 +5,12 @@ This module is a collection of cmdlets that allow you to query and manage your N
 ### List of available cmdlets
 * Get-NinjaCustomer
 * Get-NinjaDevice
+* Get-NinjaAPIKeys
+* Set-NinjaAPIKeys
+* Remove-NinjaAPIKeys
+* Get-NinjaTimeStamp
+* New-NinjaAuthorization
+* New-NinjaRequestHeader
 
 ### List of planned cmdlets
 The cmdlets planned are based on what is currently available in the API
