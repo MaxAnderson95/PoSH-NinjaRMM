@@ -3,30 +3,30 @@ This module is a collection of cmdlets that allow you to query and manage your N
 
 ## Cmdlets
 ### List of available cmdlets
-* Get-NinjaCustomer
-* Get-NinjaDevice
-* Get-NinjaAPIKeys
-* Set-NinjaAPIKeys
-* Remove-NinjaAPIKeys
-* Get-NinjaTimeStamp
-* New-NinjaAuthorization
-* New-NinjaRequestHeader
+* `Get-NinjaCustomer`
+* `Get-NinjaDevice`
+* `Get-NinjaAPIKeys`
+* `Set-NinjaAPIKeys`
+* `Remove-NinjaAPIKeys`
+* `Get-NinjaTimeStamp`
+* `New-NinjaAuthorization`
+* `New-NinjaRequestHeader`
 
 ### List of planned cmdlets
 The cmdlets planned are based on what is currently available in the API
-* Get-NinjaAlert
-* Delete-NinjaAlert
+* `Get-NinjaAlert`
+* `Delete-NinjaAlert`
 
 ### Potential future cmdlets
 These future hopefulls are dependent upon the NinjaAPI (which is in beta) releasing additional capabilities
-* New-NinjaCustomer
-* Remove-NinjaCustomer
-* New-NinjaNMSDevice
-* Remove-NinjaNMSDevice
-* Generate-NinjaInstaller
-* Remove-NinjaDevice
-* New-NinjaUser
-* Remove-NinjaUser
+* `New-NinjaCustomer`
+* `Remove-NinjaCustomer`
+* `New-NinjaNMSDevice`
+* `Remove-NinjaNMSDevice`
+* `Generate-NinjaInstaller`
+* `Remove-NinjaDevice`
+* `New-NinjaUser`
+* `Remove-NinjaUser`
 
 ## Getting Started
 ### Download and Import the Module Files
