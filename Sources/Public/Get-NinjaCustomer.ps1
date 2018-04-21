@@ -16,7 +16,6 @@ Function Get-NinjaCustomer {
     [CmdletBinding(
         
         DefaultParameterSetName='AllCustomers',
-        PositionalBinding=$false,
         HelpUri = 'https://github.com/MaxAnderson95/PoSHNinjaRMM-Management'
 
     )]
