@@ -77,6 +77,8 @@ Function Get-NinjaCustomer {
             Throw $Error
         
         }
+
+        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
         
     }
 
@@ -85,26 +87,20 @@ Function Get-NinjaCustomer {
         Switch ($PSCmdlet.ParameterSetName) {
 
             "CustomerID" {
-                
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-                
+                                
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$CustomerID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
             }
 
             "CustomerName" {
-                
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-                
+                                
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
                 $Rest = $Rest | Where-Object { $_.Name -like "*$CustomerName*" }
             
             }
 
             "AllCustomers" {
-                
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-                
+                                
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
             }

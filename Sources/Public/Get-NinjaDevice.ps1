@@ -78,6 +78,8 @@ Function Get-NinjaDevice {
         
         }
     
+        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
+
     }
     
     Process {
@@ -85,8 +87,6 @@ Function Get-NinjaDevice {
         Switch ($PSCmdlet.ParameterSetName) {
             
             "DeviceID" {
-                
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$DeviceID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
                             
@@ -94,16 +94,12 @@ Function Get-NinjaDevice {
 
             "DeviceName" {
 
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
                 $Rest = $Rest | Where-Object { $_.system_name -like "*$DeviceName*" }
 
             }
 
             "AllDevices" {
-
-                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
                             
