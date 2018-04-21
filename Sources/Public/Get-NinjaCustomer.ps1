@@ -101,6 +101,18 @@ Function Get-NinjaCustomer {
 
                     Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
 
+                        2 {
+
+                            Throw "Request header missing or malformed."
+
+                        }
+
+                        5 {
+
+                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
+
+                        }
+                        
                         6 {
 
                             Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
@@ -134,6 +146,18 @@ Function Get-NinjaCustomer {
                 Catch {
 
                     Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+                        
+                        2 {
+
+                            Throw "Request header missing or malformed."
+
+                        }
+
+                        5 {
+
+                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
+
+                        }
                         
                         6 {
 
@@ -169,6 +193,18 @@ Function Get-NinjaCustomer {
 
                     Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
 
+                        2 {
+
+                            Throw "Request header missing or malformed."
+
+                        }
+
+                        5 {
+
+                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
+
+                        }
+                        
                         6 {
 
                             Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
