@@ -78,6 +78,9 @@ Function Get-NinjaDevice {
         
         }
     
+        #Create an empty output array
+        $OutputArray = @()
+
         Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
     }
@@ -88,31 +91,41 @@ Function Get-NinjaDevice {
             
             "DeviceID" {
 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$DeviceID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-                            
+                ForEach ($ID in $DeviceID) {
+                
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$ID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $OutputArray += $Rest
+
+                }
+
             }
 
             "DeviceName" {
 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-                $Rest = $Rest | Where-Object { $_.system_name -like "*$DeviceName*" }
+                ForEach ($Name in $DeviceName) {
 
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = $Rest | Where-Object { $_.system_name -like "*$Name*" }
+                    $OutputArray += $Rest
+
+                }
             }
 
             "AllDevices" {
 
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-                            
+                $OutputArray += $Rest
+
             }
         
         }
-
-        Write-Output $Rest
     
     }
 
     End {
         
+        Write-Output $Rest
+
     }
 
 }
