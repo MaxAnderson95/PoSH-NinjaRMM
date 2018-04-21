@@ -35,7 +35,7 @@ Function Get-NinjaCustomer {
         [Alias("ID")] 
         [Int]$CustomerID,
 
-        #Returns the customer from a list that includes this PARAM
+        #Returns the customer from a list by name
         [Parameter(
             
             ParameterSetName='CustomerName',
