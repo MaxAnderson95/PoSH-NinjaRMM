@@ -86,18 +86,18 @@ Function Get-NinjaDevice {
             
             "DeviceID" {
                 
-                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/devices/$DeviceID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
-                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/devices/$DeviceID" -Headers $Header
-            
+                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$DeviceID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                            
             }
 
             "AllDevices" {
 
-                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
-                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/devices" -Headers $Header
-            
+                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                            
             }
         
         }
