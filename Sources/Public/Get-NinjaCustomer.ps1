@@ -59,8 +59,8 @@ Function Get-NinjaCustomer {
 
         Write-Verbose -Message "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
         Write-Debug "Provided Parameter values are"    
-        Write-Debug "CustomerID:$CustomerID"
-        Write-Debug "CustomerName:$CustomerName"
+        Write-Debug "CustomerID: $CustomerID"
+        Write-Debug "CustomerName: $CustomerName"
         Write-Debug "All Customers: $AllCustomers"
         
         #Define the AccessKeyID and SecretAccessKeys

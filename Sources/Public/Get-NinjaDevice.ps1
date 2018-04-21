@@ -59,8 +59,8 @@ Function Get-NinjaDevice {
         
         Write-Verbose -Message "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
         Write-Debug "Provided Parameter values are"    
-        Write-Debug "DeviceID:$DeviceID"
-        Write-Debug "DeviceName:$DeviceName"
+        Write-Debug "DeviceID: $DeviceID"
+        Write-Debug "DeviceName: $DeviceName"
         Write-Debug "All Devices: $AllDevices"
 
         #Define the AccessKeyID and SecretAccessKeys
