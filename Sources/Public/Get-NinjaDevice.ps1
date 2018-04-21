@@ -33,7 +33,7 @@ Function Get-NinjaDevice {
         )]
         [ValidateNotNullOrEmpty()]
         [Alias("ID")] 
-        [Int]$DeviceID,
+        [Int[]]$DeviceID,
 
         #Returns a device by name
         [Parameter(
@@ -46,7 +46,7 @@ Function Get-NinjaDevice {
         )]
         [ValidateNotNullOrEmpty()]
         [Alias("Name")] 
-        [String]$DeviceName,
+        [String[]]$DeviceName,
 
         #Returns all devices
         [Parameter(ParameterSetName='AllDevices')]
