@@ -13,8 +13,7 @@ Function Get-NinjaCustomer {
 
     #>
 
-    [CmdletBinding(DefaultParameterSetName='AllCustomers', 
-                    SupportsShouldProcess=$true, 
+    [CmdletBinding(DefaultParameterSetName='AllCustomers',
                     PositionalBinding=$false,
                     HelpUri = 'https://github.com/MaxAnderson95/PoSHNinjaRMM-Management',
                     ConfirmImpact='Medium')]
