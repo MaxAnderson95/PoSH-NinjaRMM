@@ -17,8 +17,8 @@ Function New-NinjaAuthroization {
 
     #>
 
-    PARAM
-    (
+    PARAM (
+        
         [Parameter(Position=0,Mandatory=$True)]
         [String]$StringToSign,
 
@@ -27,15 +27,15 @@ Function New-NinjaAuthroization {
 
         [Parameter(Position=2,Mandatory=$True)]
         [String]$SecretAccessKey
+
     )
 
-    Begin
-    {
+    Begin {
 
     }
 
-    Process
-    {
+    Process {
+        
         #Convert the String To Sign to a Base64 String
         $StringToSignBase64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($StringToSign))
 
@@ -50,11 +50,11 @@ Function New-NinjaAuthroization {
 
         #Output it
         Write-Output $Authorization
+
     }
 
-    End
-    {
-
+    End {
+        
     }
 
 }

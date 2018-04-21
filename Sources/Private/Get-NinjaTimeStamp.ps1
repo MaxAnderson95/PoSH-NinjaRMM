@@ -14,19 +14,20 @@ Function Get-NinjaTimeStamp {
 
     #>
 
-    Begin
-    {
-
+    Begin {
+        
     }
 
-    Process
-    {
+    Process {
+        
         $Date = Get-Date -date $(Get-Date).ToUniversalTime() -Format r
+    
     }
 
-    End
-    {
+    End {
+        
         Write-Output $Date
+    
     }
 
 }

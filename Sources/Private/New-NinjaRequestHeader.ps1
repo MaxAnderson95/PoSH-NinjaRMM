@@ -1,7 +1,7 @@
 Function New-NinjaRequestHeader {
 
-    PARAM
-    (
+    PARAM (
+        
         [Parameter(Mandatory=$True)]
         [string]$HTTPVerb,
 
@@ -19,15 +19,15 @@ Function New-NinjaRequestHeader {
 
         [Parameter(Mandatory=$True)]
         [String]$SecretAccessKey
+    
     )
 
-    Begin
-    {
+    Begin {
 
     }
 
-    Process
-    {
+    Process {
+        
         #Generate a Date Stamp
         $Date = Get-NinjaTimeStamp
         
@@ -39,11 +39,11 @@ Function New-NinjaRequestHeader {
         $Header = @{"Authorization" = $Authorization; "Date" = $Date}
 
         Write-Output $Header
+
     }
 
-    End
-    {
-
+    End {
+        
     }
 
 }

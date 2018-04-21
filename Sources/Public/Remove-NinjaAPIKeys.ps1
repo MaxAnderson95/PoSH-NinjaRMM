@@ -1,19 +1,18 @@
 Function Remove-NinjaApiKeys {
 
-    PARAM
-    (
+    PARAM (
+        
         [Switch]$Force
+    
     )
 
-    Begin
-    {
-        
+    Begin {
+
     }
 
-    Process
-    {
-        If (!$Force) 
-        {
+    Process {
+        
+        If (!$Force) {
         
             $title = $Null
             $message = "Delete Ninja API keys from Registry?"
@@ -25,22 +24,24 @@ Function Remove-NinjaApiKeys {
 
             $result = $host.ui.PromptForChoice($title, $message, $Options, 0)
 
-            Switch ($result)
-                {
-                    0 { Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue }
-                    1 { Write-Output "Did NOT remove API keys." }
-                }
+            Switch ($result) {
+                0 { Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue }
+                1 { Write-Output "Did NOT remove API keys." }
+                
+            }
+
         }
 
-        If ($Force) 
-        {
+        If ($Force) {
+            
             Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue
+        
         }
+    
     }
 
-    End
-    {
-
+    End {
+        
     }
 
 }
