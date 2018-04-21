@@ -51,7 +51,7 @@ Function Get-NinjaCustomer {
         #Returns all customers
         [Parameter(ParameterSetName='AllCustomers')]
         [Alias("All")] 
-        [switch]$AllCustomers
+        [Switch]$AllCustomers
 
     )
     

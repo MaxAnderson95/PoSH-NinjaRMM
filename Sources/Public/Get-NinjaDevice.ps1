@@ -51,7 +51,7 @@ Function Get-NinjaDevice {
         #Returns all devices
         [Parameter(ParameterSetName='AllDevices')]
         [Alias("All")] 
-        [switch]$AllDevices
+        [Switch]$AllDevices
     
     )
 
