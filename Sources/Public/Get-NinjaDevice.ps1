@@ -22,7 +22,7 @@ Function Get-NinjaDevice {
 
     Param (
         
-        #The Ninja Device ID
+        #Returns the device from a list by ID
         [Parameter(
             
             ParameterSetName='DeviceID',    
@@ -48,7 +48,7 @@ Function Get-NinjaDevice {
         [Alias("Name")] 
         [String]$DeviceName,
 
-        #Whether to return all devices
+        #Returns all devices
         [Parameter(ParameterSetName='AllDevices')]
         [Alias("All")] 
         [switch]$AllDevices

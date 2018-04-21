@@ -22,7 +22,7 @@ Function Get-NinjaCustomer {
 
     Param (
         
-        #The Ninja Customer ID
+        #Returns a customer by ID
         [Parameter(
             
             ParameterSetName='CustomerID',    
@@ -35,7 +35,7 @@ Function Get-NinjaCustomer {
         [Alias("ID")] 
         [Int]$CustomerID,
 
-        #Returns the customer from a list by name
+        #Returns a customer by name
         [Parameter(
             
             ParameterSetName='CustomerName',
@@ -48,7 +48,7 @@ Function Get-NinjaCustomer {
         [Alias("Name")] 
         [String]$CustomerName,
 
-        #Whether to return all customers
+        #Returns all customers
         [Parameter(ParameterSetName='AllCustomers')]
         [Alias("All")] 
         [switch]$AllCustomers
