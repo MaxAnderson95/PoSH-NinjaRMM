@@ -24,10 +24,14 @@ Function Get-NinjaCustomer {
     Param
     (
         #The Ninja Customer ID
-        [Parameter(ValueFromPipeline=$true,
-                   ValueFromPipelineByPropertyName=$true, 
-                   Position=0,
-                   ParameterSetName='CustomerID')]
+        [Parameter(
+            
+            ValueFromPipeline=$true,
+            ValueFromPipelineByPropertyName=$true, 
+            Position=0,
+            ParameterSetName='CustomerID'
+            
+        )]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Alias("ID")] 
