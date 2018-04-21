@@ -89,8 +89,31 @@ Function Get-NinjaCustomer {
                 
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers/$CustomerID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
-                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers/$CustomerID" -Headers $Header
+                Try {
+
+                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers/$CustomerID" -Headers $Header
             
+                }
+
+                Catch {
+
+                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+
+                        6 {
+
+                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+
+                        }
+
+                        Default {
+
+                            Throw $_
+
+                        }
+
+                    }
+
+                }
             }
 
             "CustomerName" {
