@@ -29,7 +29,7 @@ These future hopefulls are dependent upon the NinjaAPI (which is in beta) releas
 ### Download and Import the Module Files
 1. Clone this repository or download it to a location on your machine. Ensure that the "Sources" directory is included.
 ![](https://i.imgur.com/P9gcvmi.png)
-1. Import the module into your session or your custom script by running "Import-Module .\PoSHNinjaRMM.ps1"
+1. Import the module into your session or your custom script by running `Import-Module .\PoSHNinjaRMM.ps1`
 ![](https://i.imgur.com/mx48YJx.png)
 
 ### Generate and Import the API Key
