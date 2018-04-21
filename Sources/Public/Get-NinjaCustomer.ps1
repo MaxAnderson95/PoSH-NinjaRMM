@@ -75,7 +75,6 @@ Function Get-NinjaCustomer {
         }
         
     }
-    
 
     Process {
 
