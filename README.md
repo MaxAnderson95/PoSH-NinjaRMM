@@ -5,6 +5,7 @@ This module is a collection of cmdlets that allow you to query and manage your N
 ### List of available cmdlets
 * `Get-NinjaCustomer`
 * `Get-NinjaDevice`
+* `Get-NinjaAlert`
 * `Get-NinjaAPIKeys`
 * `Set-NinjaAPIKeys`
 * `Remove-NinjaAPIKeys`
