@@ -33,7 +33,7 @@ Function Get-NinjaCustomer {
         )]
         [ValidateNotNullOrEmpty()]
         [Alias("ID")] 
-        [Int]$CustomerID,
+        [Int[]]$CustomerID,
 
         #Returns a customer by name
         [Parameter(
@@ -46,7 +46,7 @@ Function Get-NinjaCustomer {
         )]
         [ValidateNotNullOrEmpty()]
         [Alias("Name")] 
-        [String]$CustomerName,
+        [String[]]$CustomerName,
 
         #Returns all customers
         [Parameter(ParameterSetName='AllCustomers')]
@@ -78,6 +78,9 @@ Function Get-NinjaCustomer {
         
         }
 
+        #Create an empty output array
+        $OutputArray = @()
+
         Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
         
     }
@@ -88,31 +91,42 @@ Function Get-NinjaCustomer {
 
             "CustomerID" {
                                 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$CustomerID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                ForEach ($ID in $CustomerID) {
+                    
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $OutputArray += $Rest
+
+                }
 
             }
 
             "CustomerName" {
                                 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-                $Rest = $Rest | Where-Object { $_.Name -like "*$CustomerName*" }
+                ForEach ($ID in $CustomerName) {
+                
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = $Rest | Where-Object { $_.Name -like "*$ID*" }
+                    $OutputArray += $Rest
+
+                }
             
             }
 
             "AllCustomers" {
                                 
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                $OutputArray += $Rest
 
             }
 
         }
 
-        Write-Output $Rest
-
     }
 
     End {
         
+        Write-Output $OutputArray
+
     }
 
 }
