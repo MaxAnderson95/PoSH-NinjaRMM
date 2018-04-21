@@ -87,6 +87,8 @@ Function Get-NinjaCustomer {
 
             "CustomerID" {
                 
+                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
+                
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers/$CustomerID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
                 Try {
