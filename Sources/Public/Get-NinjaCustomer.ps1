@@ -26,19 +26,25 @@ Function Get-NinjaCustomer {
         #The Ninja Customer ID
         [Parameter(
             
-            ValueFromPipeline=$true,
-            ValueFromPipelineByPropertyName=$true, 
-            Position=0,
-            ParameterSetName='CustomerID'
-
+            ParameterSetName='CustomerID',    
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True, 
+            Position=0
+            
         )]
-        [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Alias("ID")] 
         [Int]$CustomerID,
 
         #Returns the customer from a list that includes this PARAM
-        [Parameter(ParameterSetName='CustomerName')]
+        [Parameter(
+            
+            ParameterSetName='CustomerName',
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True, 
+            Position=0
+            
+        )]
         [ValidateNotNullOrEmpty()]
         [AllowEmptyString()]
         [Alias("Name")] 
@@ -104,7 +110,7 @@ Function Get-NinjaCustomer {
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
                 $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
-                
+
             }
 
         }
