@@ -30,24 +30,24 @@ Function Get-NinjaCustomer {
             ValueFromPipelineByPropertyName=$true, 
             Position=0,
             ParameterSetName='CustomerID'
-            
+
         )]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Alias("ID")] 
         [Int]$CustomerID,
 
-        # Returns the customer from a list that includes this PARAM
+        #Returns the customer from a list that includes this PARAM
         [Parameter(ParameterSetName='CustomerName')]
         [ValidateNotNullOrEmpty()]
         [AllowEmptyString()]
         [Alias("Name")] 
         [String]$CustomerName,
 
-        # Whether to return all customers
+        #Whether to return all customers
         [Parameter(ParameterSetName='AllCustomers')]
         [Alias("All")] 
-        [switch]$AllCustomers=$true
+        [switch]$AllCustomers
 
     )
     
