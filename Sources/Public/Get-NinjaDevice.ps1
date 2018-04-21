@@ -20,7 +20,7 @@ Function Get-NinjaDevice {
 
     )]
 
-    PARAM (
+    Param (
         
         #The Ninja Device ID
         [Parameter(
