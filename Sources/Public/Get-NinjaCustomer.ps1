@@ -74,8 +74,6 @@ Function Get-NinjaCustomer {
         
         }
         
-        #Determine if the input is CustomerID or no Customer entered (looking for list of all)
-        #$PSCmdlet.ParameterSetName
     }
     
 
