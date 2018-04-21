@@ -126,7 +126,8 @@ Function Get-NinjaCustomer {
 
                 Try {
                 
-                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header | Where-Object { $_.Name -like "*$CustomerName*"}
+                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
+                    $Rest = $Rest | Where-Object { $_.name -like "*$CustomerName*" }
                 
                 }
 
