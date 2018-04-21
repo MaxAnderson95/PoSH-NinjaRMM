@@ -77,26 +77,12 @@ Function Get-NinjaDevice {
             Throw $Error
         
         }
-        
-        #Determine if the input is CustomerID or no Customer entered (looking for list of all)
-        If ($DeviceID) {
-            
-            $Choice = "DeviceID"
-        
-        }
-        
-        Else {
-            
-            $Choice = "None"
-        
-        }
     
     }
     
-
     Process {
         
-        Switch ($Choice) {
+        Switch ($PSCmdlet.ParameterSetName) {
             
             "DeviceID" {
                 
@@ -106,7 +92,7 @@ Function Get-NinjaDevice {
             
             }
 
-            "None" {
+            "AllDevices" {
 
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
