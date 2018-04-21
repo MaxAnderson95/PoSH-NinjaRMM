@@ -93,7 +93,7 @@ Function Get-NinjaCustomer {
                 #This just pullls the full list and returns only the matching entry. I'm not warning here since when it is recursively called it will warn then  
                 Write-Verbose -Message "Recursively calling AllCustomers and returns only the matching entry from that"
                 
-                $Rest = Get-NinjaCustomer | Where-Object -Property Name -Like "*$CustomerName*"
+                $Rest = Get-NinjaCustomer | Where-Object { $_.Name -like "*$CustomerName*"}
             
             }
 
