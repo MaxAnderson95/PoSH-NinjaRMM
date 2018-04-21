@@ -102,10 +102,10 @@ Function Get-NinjaCustomer {
 
             "CustomerName" {
                                 
-                ForEach ($ID in $CustomerName) {
+                ForEach ($Name in $CustomerName) {
                 
                     $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-                    $Rest = $Rest | Where-Object { $_.Name -like "*$ID*" }
+                    $Rest = $Rest | Where-Object { $_.Name -like "*$Name*" }
                     $OutputArray += $Rest
 
                 }
