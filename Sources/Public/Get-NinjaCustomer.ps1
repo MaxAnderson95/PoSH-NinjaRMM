@@ -118,10 +118,11 @@ Function Get-NinjaCustomer {
 
             "CustomerName" {
                 
-                #This just pullls the full list and returns only the matching entry. I'm not warning here since when it is recursively called it will warn then  
-                Write-Verbose -Message "Recursively calling AllCustomers and returns only the matching entry from that"
+                Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
                 
-                $Rest = Get-NinjaCustomer | Where-Object { $_.Name -like "*$CustomerName*"}
+                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header | Where-Object { $_.Name -like "*$CustomerName*"}
             
             }
 
