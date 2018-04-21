@@ -18,9 +18,9 @@ Function Get-NinjaCustomer {
         DefaultParameterSetName='AllCustomers',
         PositionalBinding=$false,
         HelpUri = 'https://github.com/MaxAnderson95/PoSHNinjaRMM-Management'
-        
+
     )]
-    [Alias()]
+
     Param
     (
         # Param1 help description
