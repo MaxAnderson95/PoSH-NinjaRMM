@@ -124,7 +124,31 @@ Function Get-NinjaCustomer {
                 
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
-                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header | Where-Object { $_.Name -like "*$CustomerName*"}
+                Try {
+                
+                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header | Where-Object { $_.Name -like "*$CustomerName*"}
+                
+                }
+
+                Catch {
+
+                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+                        
+                        6 {
+
+                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+
+                        }
+
+                        Default {
+
+                            Throw $_
+
+                        }
+
+                    }
+
+                }
             
             }
 
@@ -134,7 +158,31 @@ Function Get-NinjaCustomer {
                 
                 $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
-                $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
+                Try {
+                
+                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
+
+                }
+
+                Catch {
+
+                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+
+                        6 {
+
+                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+
+                        }
+
+                        Default {
+
+                            Throw $_
+
+                        }
+
+                    }
+
+                }
 
             }
 
