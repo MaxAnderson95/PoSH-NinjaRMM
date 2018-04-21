@@ -46,7 +46,6 @@ Function Get-NinjaCustomer {
             
         )]
         [ValidateNotNullOrEmpty()]
-        [AllowEmptyString()]
         [Alias("Name")] 
         [String]$CustomerName,
 
