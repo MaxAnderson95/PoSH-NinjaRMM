@@ -23,7 +23,7 @@ Function Get-NinjaCustomer {
 
     Param
     (
-        # Param1 help description
+        #The Ninja Customer ID
         [Parameter(ValueFromPipeline=$true,
                    ValueFromPipelineByPropertyName=$true, 
                    Position=0,
