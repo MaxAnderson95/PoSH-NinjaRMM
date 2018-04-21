@@ -89,91 +89,16 @@ Function Get-NinjaCustomer {
                 
                 Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
                 
-                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers/$CustomerID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$CustomerID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
-                Try {
-
-                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers/$CustomerID" -Headers $Header
-            
-                }
-
-                Catch {
-
-                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
-
-                        2 {
-
-                            Throw "Request header missing or malformed."
-
-                        }
-
-                        5 {
-
-                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
-
-                        }
-                        
-                        6 {
-
-                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
-
-                        }
-
-                        Default {
-
-                            Throw $_
-
-                        }
-
-                    }
-
-                }
             }
 
             "CustomerName" {
                 
                 Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
                 
-                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-
-                Try {
-                
-                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
-                    $Rest = $Rest | Where-Object { $_.name -like "*$CustomerName*" }
-                
-                }
-
-                Catch {
-
-                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
-                        
-                        2 {
-
-                            Throw "Request header missing or malformed."
-
-                        }
-
-                        5 {
-
-                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
-
-                        }
-                        
-                        6 {
-
-                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
-
-                        }
-
-                        Default {
-
-                            Throw $_
-
-                        }
-
-                    }
-
-                }
+                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                $Rest = $Rest | Where-Object { $_.Name -like "*$CustomerName*" }
             
             }
 
@@ -181,45 +106,7 @@ Function Get-NinjaCustomer {
                 
                 Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
                 
-                $Header = New-NinjaRequestHeader -HTTPVerb GET -Resource /v1/customers -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
-
-                Try {
-                
-                    $Rest = Invoke-RestMethod -Method GET -Uri "https://api.ninjarmm.com/v1/customers" -Headers $Header
-
-                }
-
-                Catch {
-
-                    Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
-
-                        2 {
-
-                            Throw "Request header missing or malformed."
-
-                        }
-
-                        5 {
-
-                            Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
-
-                        }
-                        
-                        6 {
-
-                            Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
-
-                        }
-
-                        Default {
-
-                            Throw $_
-
-                        }
-
-                    }
-
-                }
+                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
 
             }
 
