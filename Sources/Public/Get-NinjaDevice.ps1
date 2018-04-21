@@ -22,7 +22,7 @@ Function Get-NinjaDevice {
 
     Param (
         
-        #Returns the device from a list by ID
+        #Returns a device by ID
         [Parameter(
             
             ParameterSetName='DeviceID',    
@@ -35,7 +35,7 @@ Function Get-NinjaDevice {
         [Alias("ID")] 
         [Int]$DeviceID,
 
-        #Returns the device from a list by name
+        #Returns a device by name
         [Parameter(
             
             ParameterSetName='DeviceName',
@@ -57,11 +57,19 @@ Function Get-NinjaDevice {
 
     Begin {
         
+        Write-Verbose -Message "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
+        Write-Debug "Provided Parameter values are"    
+        Write-Debug "DeviceID:$DeviceID"
+        Write-Debug "DeviceName:$DeviceName"
+        Write-Debug "All Devices: $AllDevices"
+
         #Define the AccessKeyID and SecretAccessKeys
         Try {
             
             $Keys = Get-NinjaAPIKeys
-        
+            Write-Debug "Using Nija API Keys: "
+            Write-Debug $Keys
+
         } 
         
         Catch {
