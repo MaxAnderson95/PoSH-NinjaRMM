@@ -13,9 +13,45 @@ Function Get-NinjaDevice {
 
     #>
 
+    [CmdletBinding(
+        
+        DefaultParameterSetName='AllDevices',
+        HelpUri = 'https://github.com/MaxAnderson95/PoSHNinjaRMM-Management'
+
+    )]
+
     PARAM (
         
-        [Int]$DeviceID
+        #The Ninja Device ID
+        [Parameter(
+            
+            ParameterSetName='DeviceID',    
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True, 
+            Position=0
+            
+        )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("ID")] 
+        [Int]$DeviceID,
+
+        #Returns the device from a list by name
+        [Parameter(
+            
+            ParameterSetName='DeviceName',
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True, 
+            Position=0
+            
+        )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("Name")] 
+        [String]$DeviceName,
+
+        #Whether to return all devices
+        [Parameter(ParameterSetName='AllDevices')]
+        [Alias("All")] 
+        [switch]$AllDevices
     
     )
 
