@@ -22,6 +22,18 @@ Function Get-NinjaAlert {
 
     Param (
 
+        #Return all alerts for a given DeviceID
+        [Parameter(
+
+            ParameterSetName='DeviceID',
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True,
+            Position=0
+
+        )]
+        [Alias("ID")]
+        [Int[]]$DeviceID,
+    
         #Return all alerts since specific alert ID
         [Parameter(
             
@@ -32,7 +44,7 @@ Function Get-NinjaAlert {
             
         )]
         [Alias("Since","SinceAlert")]
-        [Int32]$SinceAlertID,
+        [Int]$SinceAlertID,
     
         #Returns all alerts
         [Parameter(ParameterSetName='AllAlerts')]
@@ -75,6 +87,18 @@ Function Get-NinjaAlert {
 
         Switch ($PSCmdlet.ParameterSetName) {
 
+            "DeviceID" {
+
+                ForEach ($ID in $DeviceID) {
+                    
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = $Rest | Where-Object { $_.device.id -eq $ID }
+                    $OutputArray += $Rest
+                
+                }
+
+            }
+            
             "SinceAlert" {
 
                 $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
