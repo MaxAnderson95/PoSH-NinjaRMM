@@ -63,8 +63,8 @@ Function Invoke-NinjaAPIRequest {
     
         If ($CacheFileStale -eq $True) {
 
-            Write-Debug "Force removing cache file for $Resource"
-            Write-Verbose "Force removing cache file for $Resource"
+            Write-Debug "Cache is stale. Force removing cache file for $Resource"
+            Write-Verbose "Cache is stale. Force removing cache file for $Resource"
             Remove-Item -Path $CacheFilePath -Force -ErrorAction SilentlyContinue
 
         }
@@ -113,6 +113,7 @@ Function Invoke-NinjaAPIRequest {
 
         #Cache the data
         Write-Debug "Caching the data for $Resource to $CacheFilePath"
+        Write-Verbose "Caching the data for $Resource to $CacheFilePath"
         $Rest | Export-Clixml -Path $CacheFilePath
 
     }
@@ -121,7 +122,7 @@ Function Invoke-NinjaAPIRequest {
 
         Write-Debug "Utilizing Cached Version of API Data"
         Write-Verbose "Utilizing Cached Version of API Data"
-        Write-Warning -Message "The data presented is cached and may be up to $CacheTimeout minutes old."
+        Write-Warning -Message "The data presented is cached and may be up to $CacheTimeout minutes old. Use the -NoCache switch to request live data from the API."
 
         $Rest = Import-Clixml -Path $CacheFilePath
 
