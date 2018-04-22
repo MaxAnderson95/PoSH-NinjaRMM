@@ -25,47 +25,105 @@ Function Invoke-NinjaAPIRequest {
 
         [String]$SecretAccessKey,
 
+        [Switch]$NoCache,
+
         [String]$BaseNinjaAPIURI = "https://api.ninjarmm.com"
 
     )
 
-    $Header = New-NinjaRequestHeader -HTTPVerb $HTTPVerb -Resource $Resource -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
-    
-    Try {
-    
-        $Rest = Invoke-RestMethod -Method $HTTPVerb -Uri ($BaseNinjaAPIURI + $Resource) -Headers $Header
-    
+    #Caching Variables
+    $CacheTimeout = 10 #In Minutes
+    $TranslatedCacheFileName = $Resource.replace("/","-").TrimStart("-") + ".xml"
+    $CacheFilePath = "$PSScriptRoot\..\..\API_Cache\$TranslatedCacheFileName"
+
+    #Check if Cache File Exists and is within the Cache Timeout Period (Check if it's still valid)
+    $CacheFile = Get-ChildItem -Path $CacheFilePath -ErrorAction SilentlyContinue
+
+    If ($CacheFile) {
+
+        $CacheFileExists = $True
+        
+        If ($CacheFile | Where-Object { $_.LastWriteTime -gt (Get-Date).AddMinutes(-$CacheTimeout) }) {
+
+            $CacheFileStale = $False
+
+        }
+
+        Else { $CacheFileStale = $True }
+
     }
 
-    Catch {
+    Else { $CacheFileExists = $False }
 
-        Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
-            
-            2 {
+    Write-Debug "Cache File Path If It Exists: $CacheFilePath"
+    Write-Debug "`$CacheFileExists: $CacheFileExists"
+    Write-Debug "`$CacheFileStale: $CacheFileStale"
 
-                Throw "Request header missing or malformed."
+    If ($CacheFileExists -eq $False -or ($CacheFileExists -eq $True -and $CacheFileStale -eq $True) -or $NoCache -eq $True) {
+    
+        If ($CacheFileStale -eq $True) {
 
-            }
+            Write-Debug "Force removing cache file for $Resource"
+            Write-Verbose "Force removing cache file for $Resource"
+            Remove-Item -Path $CacheFilePath -Force -ErrorAction SilentlyContinue
 
-            5 {
+        }
+        
+        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
+        
+        $Header = New-NinjaRequestHeader -HTTPVerb $HTTPVerb -Resource $Resource -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
+        
+        Try {
+        
+            $Rest = Invoke-RestMethod -Method $HTTPVerb -Uri ($BaseNinjaAPIURI + $Resource) -Headers $Header
+        
+        }
 
-                Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
+        Catch {
 
-            }
-            
-            6 {
+            Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+                
+                2 {
 
-                Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+                    Throw "Request header missing or malformed."
 
-            }
+                }
 
-            Default {
+                5 {
 
-                Throw $_
+                    Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
+
+                }
+                
+                6 {
+
+                    Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+
+                }
+
+                Default {
+
+                    Throw $_
+
+                }
 
             }
 
         }
+
+        #Cache the data
+        Write-Debug "Caching the data for $Resource to $CacheFilePath"
+        $Rest | Export-Clixml -Path $CacheFilePath
+
+    }
+
+    If ($CacheFileExists -eq $True -and $CacheFileStale -eq $False -and $NoCache -eq $False) {
+
+        Write-Debug "Utilizing Cached Version of API Data"
+        Write-Verbose "Utilizing Cached Version of API Data"
+        Write-Warning -Message "The data presented is cached and may be up to $CacheTimeout minutes old."
+
+        $Rest = Import-Clixml -Path $CacheFilePath
 
     }
     

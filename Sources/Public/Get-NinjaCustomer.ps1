@@ -49,9 +49,15 @@ Function Get-NinjaCustomer {
         [String[]]$CustomerName,
 
         #Returns all customers
-        [Parameter(ParameterSetName='AllCustomers')]
+        [Parameter(ParameterSetName='AllCustomers',Position=0)]
         [Alias("All")] 
-        [Switch]$AllCustomers
+        [Switch]$AllCustomers,
+
+        #Whether to force the query of live API data
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
+        [Parameter(ParameterSetName='CustomerName',Position=1)]
+        [Parameter(ParameterSetName='AllCustomers',Position=1)]
+        [Switch]$NoCache
 
     )
     
@@ -62,6 +68,7 @@ Function Get-NinjaCustomer {
         Write-Debug "CustomerID: $CustomerID"
         Write-Debug "CustomerName: $CustomerName"
         Write-Debug "All Customers: $AllCustomers"
+        Write-Debug "NoCache: $NoCache"
         
         #Define the AccessKeyID and SecretAccessKeys
         Try {
@@ -80,8 +87,6 @@ Function Get-NinjaCustomer {
 
         #Create an empty output array
         $OutputArray = @()
-
-        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
         
     }
 
@@ -93,7 +98,18 @@ Function Get-NinjaCustomer {
                                 
                 ForEach ($ID in $CustomerID) {
                     
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                    
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+
                     $OutputArray += $Rest
 
                 }
@@ -104,7 +120,18 @@ Function Get-NinjaCustomer {
                                 
                 ForEach ($Name in $CustomerName) {
                 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                        
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+                    
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+
                     $Rest = $Rest | Where-Object { $_.Name -like "*$Name*" }
                     $OutputArray += $Rest
 
@@ -114,7 +141,18 @@ Function Get-NinjaCustomer {
 
             "AllCustomers" {
                                 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                If ($NoCache) {
+                
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                
+                }
+
+                Else {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                }
+
                 $OutputArray += $Rest
 
             }

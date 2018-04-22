@@ -81,8 +81,6 @@ Function Get-NinjaDevice {
         #Create an empty output array
         $OutputArray = @()
 
-        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-
     }
     
     Process {
