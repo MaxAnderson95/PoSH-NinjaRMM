@@ -22,6 +22,18 @@ Function Get-NinjaAlert {
 
     Param (
 
+        #Return all alerts for a given DeviceName
+        [Parameter(
+
+            ParameterSetName='DeviceName',
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True,
+            Position=0
+
+        )]
+        [Alias("Device","Name")]
+        [String[]]$DeviceName,
+        
         #Return all alerts for a given DeviceID
         [Parameter(
 
@@ -87,6 +99,18 @@ Function Get-NinjaAlert {
 
         Switch ($PSCmdlet.ParameterSetName) {
 
+            "DeviceName" {
+
+                ForEach ($Name in $DeviceName) {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = $Rest | Where-Object { $_.device.system_name -like "*$Name*" }
+                    $OutputArray += $Rest
+
+                }
+                
+            }
+            
             "DeviceID" {
 
                 ForEach ($ID in $DeviceID) {
