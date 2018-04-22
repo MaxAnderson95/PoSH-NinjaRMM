@@ -57,7 +57,18 @@ Function Get-NinjaAlert {
         )]
         [Alias("Customer")]
         [String[]]$CustomerName,
-    
+
+        #Return all alerts for a given CustomerID
+        [Parameter(
+
+            ParameterSetName='CustomerID',
+            ValueFromPipeline=$True,
+            ValueFromPipelineByPropertyName=$True,
+            Position=0
+
+        )]
+        [String[]]$CustomerID,
+
         #Return all alerts since specific alert ID
         [Parameter(
             
@@ -141,6 +152,18 @@ Function Get-NinjaAlert {
 
                     $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
                     $Rest = $Rest | Where-Object { $_.customer.name -like "*$Name*" }
+                    $OutputArray += $Rest
+
+                }
+
+            }
+
+            "CustomerID" {
+
+                ForEach ($ID in $CustomerID) {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = $Rest | Where-Object { $_.customer.id -eq $ID }
                     $OutputArray += $Rest
 
                 }
