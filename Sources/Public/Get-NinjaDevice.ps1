@@ -124,7 +124,7 @@ Function Get-NinjaDevice {
 
     End {
         
-        Write-Output $Rest
+        Write-Output $OutputArray
 
     }
 
