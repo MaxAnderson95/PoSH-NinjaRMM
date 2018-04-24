@@ -128,6 +128,6 @@ Function Invoke-NinjaAPIRequest {
 
     }
     
-    Write-Output $Rest
+    Write-Output $Rest    
 
 }
