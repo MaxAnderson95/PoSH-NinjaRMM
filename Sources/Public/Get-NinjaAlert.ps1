@@ -84,7 +84,16 @@ Function Get-NinjaAlert {
         #Returns all alerts
         [Parameter(ParameterSetName='AllAlerts')]
         [Alias("All")]
-        [Switch]$AllAlerts
+        [Switch]$AllAlerts,
+
+        #Whether to force the query of live API data
+        [Parameter(ParameterSetName='DeviceName',Position=1)]
+        [Parameter(ParameterSetName='DeviceID',Position=1)]
+        [Parameter(ParameterSetName='CustomerName',Position=1)]
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
+        [Parameter(ParameterSetName='SinceAlert',Position=1)]
+        [Parameter(ParameterSetName='AllAlerts',Position=1)]
+        [Switch]$NoCache
 
     )
 
@@ -124,7 +133,18 @@ Function Get-NinjaAlert {
 
                 ForEach ($Name in $DeviceName) {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                    
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+
                     $Rest = $Rest | Where-Object { $_.device.system_name -like "*$Name*" }
                     $OutputArray += $Rest
 
@@ -136,7 +156,18 @@ Function Get-NinjaAlert {
 
                 ForEach ($ID in $DeviceID) {
                     
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                    
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+                    
                     $Rest = $Rest | Where-Object { $_.device.id -eq $ID }
                     $OutputArray += $Rest
                 
@@ -148,7 +179,18 @@ Function Get-NinjaAlert {
 
                 ForEach ($Name in $CustomerName) {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                    
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+
                     $Rest = $Rest | Where-Object { $_.customer.name -like "*$Name*" }
                     $OutputArray += $Rest
 
@@ -160,7 +202,18 @@ Function Get-NinjaAlert {
 
                 ForEach ($ID in $CustomerID) {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    If ($NoCache) {
+                    
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                    }
+
                     $Rest = $Rest | Where-Object { $_.customer.id -eq $ID }
                     $OutputArray += $Rest
 
@@ -170,14 +223,36 @@ Function Get-NinjaAlert {
             
             "SinceAlert" {
 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                If ($NoCache) {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                
+                }
+
+                Else {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+
+                }
+
                 $OutputArray += $Rest
 
             }
             
             "AllAlerts" {
 
-                $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                If ($NoCache) {
+
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+
+                }
+                
+                Else {
+                    
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                
+                }
+                
                 $OutputArray += $Rest
 
             }
