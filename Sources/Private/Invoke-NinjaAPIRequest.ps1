@@ -81,6 +81,36 @@ Function Invoke-NinjaAPIRequest {
 
             Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error) {
                 
+                "invalid_header" {
+
+                    Throw "The request header was syntacticalyl incorrect or malformed."
+
+                }
+
+                "missing_header" {
+
+                    Throw "The header is missing in the request."
+
+                }
+                
+                "skewed_time" {
+
+                    Throw "The system time is too far from current time."
+
+                }
+
+                "not_authenticated" {
+
+                    Throw "Invalid API keys or the signature is not valid."
+
+                }
+
+                "rate_limit_exceeded" {
+
+                    Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
+                    
+                }
+
                 "too_many_requests" {
 
                     Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
@@ -95,7 +125,8 @@ Function Invoke-NinjaAPIRequest {
 
                 Default {
 
-                    Throw $_
+                    Throw "An unhandeled exception occured."
+                    Throw $Error
 
                 }
 
