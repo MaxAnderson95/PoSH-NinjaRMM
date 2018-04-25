@@ -10,20 +10,8 @@ Function Set-NinjaAPIKeys {
 
     )
 
-    Begin {
-
-    }
-
-    Process {
-        
-        New-Item -Path "HKLM:\SOFTWARE\" -Name "PoSHNinjaRMM" -Force
-        New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "AccessKeyID" -Value $AccessKeyID -Force
-        New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "SecretAccessKey" -Value $SecretAccessKey -Force
-    
-    }
-
-    End {
-        
-    }
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "PoSHNinjaRMM" -Force
+    New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "AccessKeyID" -Value $AccessKeyID -Force
+    New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "SecretAccessKey" -Value $SecretAccessKey -Force
 
 }

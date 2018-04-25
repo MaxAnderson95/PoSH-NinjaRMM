@@ -21,29 +21,17 @@ Function New-NinjaRequestHeader {
         [String]$SecretAccessKey
     
     )
-
-    Begin {
-
-    }
-
-    Process {
         
-        #Generate a Date Stamp
-        $Date = Get-NinjaTimeStamp
-        
-        #Generate the String by concatenating the inputs together
-        $StringToSign = $HTTPVerb + "`n" + $ContentMD5 + "`n" + $ContentType + "`n" + $Date + "`n" + $Resource
+    #Generate a Date Stamp
+    $Date = Get-NinjaTimeStamp
+    
+    #Generate the String by concatenating the inputs together
+    $StringToSign = $HTTPVerb + "`n" + $ContentMD5 + "`n" + $ContentType + "`n" + $Date + "`n" + $Resource
 
-        $Authorization = New-NinjaAuthroization -StringToSign $StringToSign -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
+    $Authorization = New-NinjaAuthroization -StringToSign $StringToSign -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
 
-        $Header = @{"Authorization" = $Authorization; "Date" = $Date}
+    $Header = @{"Authorization" = $Authorization; "Date" = $Date}
 
-        Write-Output $Header
-
-    }
-
-    End {
-        
-    }
+    Write-Output $Header
 
 }

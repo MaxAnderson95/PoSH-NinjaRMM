@@ -1,33 +1,18 @@
 Function Get-NinjaAPIKeys {
 
-    PARAM (
+    $AccessKeyID = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "AccessKeyID" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty AccessKeyID
+    $SecretAccessKey = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "SecretAccessKey" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty SecretAccessKey
+    
 
-    )
-
-    Begin {
+    If ($AccessKeyID -eq $Null -or $SecretAccessKey -eq $Null) {
         
-    }
-
-    Process {
-
-        $AccessKeyID = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "AccessKeyID" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty AccessKeyID
-        $SecretAccessKey = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "SecretAccessKey" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty SecretAccessKey
+        Write-Error "The Ninja API keys not set in registry, use Set-NinjaAPIKeys to set them"
     
     }
-
-    End {
-
-        If ($AccessKeyID -eq $Null -or $SecretAccessKey -eq $Null) {
-            
-            Write-Error "The Ninja API keys not set in registry, use Set-NinjaAPIKeys to set them"
         
-        }
+    Else {
         
-        Else {
-            
-            Write-Output @{"AccessKeyID" = $AccessKeyID; "SecretAccessKey" = $SecretAccessKey}
-        
-        }
+        Write-Output @{"AccessKeyID" = $AccessKeyID; "SecretAccessKey" = $SecretAccessKey}
     
     }
 

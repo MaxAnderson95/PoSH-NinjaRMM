@@ -29,32 +29,20 @@ Function New-NinjaAuthroization {
         [String]$SecretAccessKey
 
     )
-
-    Begin {
-
-    }
-
-    Process {
         
-        #Convert the String To Sign to a Base64 String
-        $StringToSignBase64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($StringToSign))
+    #Convert the String To Sign to a Base64 String
+    $StringToSignBase64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($StringToSign))
 
-        #Generate HMACSHA1 Hash
-        $HMACSHA = New-Object System.Security.Cryptography.HMACSHA1
-        $HMACSHA.Key = [Text.Encoding]::ASCII.GetBytes($SecretAccessKey)
-        $Signature = $HMACSHA.ComputeHash([Text.Encoding]::UTF8.GetBytes($StringToSignBase64))
-        $Signature = [Convert]::ToBase64String($Signature)
+    #Generate HMACSHA1 Hash
+    $HMACSHA = New-Object System.Security.Cryptography.HMACSHA1
+    $HMACSHA.Key = [Text.Encoding]::ASCII.GetBytes($SecretAccessKey)
+    $Signature = $HMACSHA.ComputeHash([Text.Encoding]::UTF8.GetBytes($StringToSignBase64))
+    $Signature = [Convert]::ToBase64String($Signature)
 
-        #Generate the Authorization string
-        $Authorization = "NJ $AccessKeyID`:$Signature"
+    #Generate the Authorization string
+    $Authorization = "NJ $AccessKeyID`:$Signature"
 
-        #Output it
-        Write-Output $Authorization
-
-    }
-
-    End {
-        
-    }
+    #Output it
+    Write-Output $Authorization
 
 }

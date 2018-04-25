@@ -13,21 +13,9 @@ Function Get-NinjaTimeStamp {
         Wed, 12 Apr 2017 13:52:36 GMT
 
     #>
-
-    Begin {
         
-    }
-
-    Process {
-        
-        $Date = Get-Date -date $(Get-Date).ToUniversalTime() -Format r
+    $Date = Get-Date -date $(Get-Date).ToUniversalTime() -Format r
     
-    }
-
-    End {
-        
-        Write-Output $Date
-    
-    }
+    Write-Output $Date
 
 }
