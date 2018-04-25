@@ -68,9 +68,7 @@ Function Invoke-NinjaAPIRequest {
             Remove-Item -Path $CacheFilePath -Force -ErrorAction SilentlyContinue
 
         }
-        
-        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
-        
+                
         $Header = New-NinjaRequestHeader -HTTPVerb $HTTPVerb -Resource $Resource -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
         
         Try {
@@ -104,6 +102,8 @@ Function Invoke-NinjaAPIRequest {
             }
 
         }
+
+        Write-Warning -Message "This uses a List API and is rate limited to 10 requests per 10 minutes by Ninja"
 
         #Cache the data
         Write-Debug "Caching the data for $Resource to $CacheFilePath"
