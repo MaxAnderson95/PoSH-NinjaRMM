@@ -19,7 +19,7 @@ Function Get-NinjaAPIKeys {
 
         If ($AccessKeyID -eq $Null -or $SecretAccessKey -eq $Null) {
             
-            Write-Error "The Ninja API keys not set in registry, use Set-NinjaKeys to set them"
+            Write-Error "The Ninja API keys not set in registry, use Set-NinjaAPIKeys to set them"
         
         }
         
