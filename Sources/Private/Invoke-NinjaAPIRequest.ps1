@@ -81,24 +81,18 @@ Function Invoke-NinjaAPIRequest {
 
         Catch {
 
-            Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error_code) {
+            Switch ($_.ErrorDetails.Message | ConvertFrom-JSON | Select-Object -ExpandProperty error) {
                 
-                2 {
-
-                    Throw "Request header missing or malformed."
-
-                }
-
-                5 {
-
-                    Throw "Unable to authenticate to the API. There is an issue with the validity of the API keys."
-
-                }
-                
-                6 {
+                "too_many_requests" {
 
                     Throw "Too many requests. List API requests are rate limited to 10 requests per 10 minutes by Ninja."
 
+                }
+
+                "invalid_id" {
+
+                    Throw "Requested entity does not exist."
+                    
                 }
 
                 Default {
