@@ -10,8 +10,16 @@ Function Set-NinjaAPIKeys {
 
     )
 
-    New-Item -Path "HKLM:\SOFTWARE\" -Name "PoSHNinjaRMM" -Force
-    New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "AccessKeyID" -Value $AccessKeyID -Force
-    New-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM" -Name "SecretAccessKey" -Value $SecretAccessKey -Force
+    $Keys = [PSCustomObject] @{
 
+        "AccessKeyID" = $AccessKeyID
+        "SecretAccessKey" = $SecretAccessKey
+
+    }
+
+    $ModulePath = Get-Module -Name PoSH-NinjaRMM | Select-Object -ExpandProperty ModuleBase
+    $KeyFileName = "key.json"
+
+    $Keys | ConvertTo-JSON | Out-File -FilePath "$ModulePath\$KeyFileName" -Force
+    
 }

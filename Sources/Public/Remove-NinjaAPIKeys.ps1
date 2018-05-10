@@ -5,6 +5,9 @@ Function Remove-NinjaApiKeys {
         [Switch]$Force
     
     )
+
+    $ModulePath = Get-Module -Name PoSH-NinjaRMM | Select-Object -ExpandProperty ModuleBase
+    $KeyFileName = "key.json"
         
     If (!$Force) {
     
@@ -19,7 +22,7 @@ Function Remove-NinjaApiKeys {
         $result = $host.ui.PromptForChoice($title, $message, $Options, 0)
 
         Switch ($result) {
-            0 { Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue }
+            0 { Remove-Item -Path "$ModulePath\$KeyFileName" -Force }
             1 { Write-Output "API Keys not removed." }
             
         }
@@ -28,7 +31,7 @@ Function Remove-NinjaApiKeys {
 
     If ($Force) {
         
-        Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "$ModulePath\$KeyFileName" -Force
     
     }
     

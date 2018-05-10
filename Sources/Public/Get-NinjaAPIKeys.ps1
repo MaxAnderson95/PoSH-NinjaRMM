@@ -1,10 +1,12 @@
 Function Get-NinjaAPIKeys {
 
-    $AccessKeyID = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "AccessKeyID" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty AccessKeyID
-    $SecretAccessKey = Get-ItemProperty -Path "HKLM:\SOFTWARE\PoSHNinjaRMM\" -Name "SecretAccessKey" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty SecretAccessKey
+    $ModulePath = Get-Module -Name PoSH-NinjaRMM | Select-Object -ExpandProperty ModuleBase
+    $KeyFileName = "key.json"
+    
+    $Key = Get-Content "$ModulePath\$KeyFileName" -ErrorAction SilentlyContinue | ConvertFrom-JSON -ErrorAction SilentlyContinue
     
 
-    If ($AccessKeyID -eq $Null -or $SecretAccessKey -eq $Null) {
+    If ($Key.AccessKeyID -eq $Null -or $Key.SecretAccessKey -eq $Null) {
         
         Write-Error "The Ninja API keys not set in registry, use Set-NinjaAPIKeys to set them"
     
@@ -12,7 +14,7 @@ Function Get-NinjaAPIKeys {
         
     Else {
         
-        Write-Output @{"AccessKeyID" = $AccessKeyID; "SecretAccessKey" = $SecretAccessKey}
+        Write-Output $Key
     
     }
 
