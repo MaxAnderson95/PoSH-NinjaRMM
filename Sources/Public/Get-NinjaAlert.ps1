@@ -116,8 +116,8 @@ Function Get-NinjaAlert {
         
         Catch {
             
-            Throw $Error
-        
+            Break    
+                
         }
     
         #Create an empty output array

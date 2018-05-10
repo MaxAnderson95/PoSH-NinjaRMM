@@ -82,7 +82,7 @@ Function Get-NinjaDevice {
         
         Catch {
             
-            Throw $Error
+            Break
         
         }
     

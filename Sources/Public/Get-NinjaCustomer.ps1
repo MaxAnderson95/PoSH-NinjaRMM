@@ -81,7 +81,7 @@ Function Get-NinjaCustomer {
         
         Catch {
             
-            Throw $Error
+            Break
         
         }
 
