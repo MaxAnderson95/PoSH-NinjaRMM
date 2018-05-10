@@ -3,10 +3,22 @@ Function New-NinjaAuthroization {
     <#
 
     .SYNOPSIS
-        Generates the HMACSHA1 Signature for the API Request
+        Generates the HMACSHA1 Signature for the API Request.
 
     .DESCRIPTION
-        Takes the requested portion of the API request as a string and the public and private keys and uses HMACSHA1 to generate a signature and then generates an Authorization to use in the HTTP request.
+        Takes the requested portion of the API request as a string and the public and private keys and uses HMACSHA1 to 
+        generate a signature and then generates an Authorization to use in the HTTP request.
+
+    .PARAMETER StringToSign
+        The StringToSign is the: HTTPVerb + a line break + the content MD5 (not currently needed in API v0.1.2) + a line break +
+        the content type (not currently needed in API v0.1.2) + a line break + a date and time + a line break +
+        the API resource. See the API documentation for more information on this.
+
+    .PARAMETER AccessKeyID
+        The public portion of the API key.
+
+    .PARAMETER SecretAccessKey
+        The private portion of the API key.
 
     .EXAMPLE
         PS C:> $String = "GET`n`n`nSun, 01 May 2016 06:51:10 GMT`n/v1/customers"
@@ -39,10 +51,10 @@ Function New-NinjaAuthroization {
     $Signature = $HMACSHA.ComputeHash([Text.Encoding]::UTF8.GetBytes($StringToSignBase64))
     $Signature = [Convert]::ToBase64String($Signature)
 
-    #Generate the Authorization string
+    #Generate the Authorization string. This is the format required by the documentation
     $Authorization = "NJ $AccessKeyID`:$Signature"
 
-    #Output it
+    #Output the authorization string
     Write-Output $Authorization
 
 }
