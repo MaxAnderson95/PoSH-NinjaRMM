@@ -101,13 +101,13 @@ Function Get-NinjaDevice {
                     
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$ID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$ID -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$ID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices/$ID
                         
                     }
 
@@ -123,13 +123,13 @@ Function Get-NinjaDevice {
 
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices
 
                     }
 
@@ -144,13 +144,13 @@ Function Get-NinjaDevice {
 
                 If ($NoCache) {
                 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -NoCache
                 
                 }
 
                 Else {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices
                     
                 }
 

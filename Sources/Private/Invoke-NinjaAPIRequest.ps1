@@ -21,16 +21,29 @@ Function Invoke-NinjaAPIRequest {
 
         [String]$Resource,
 
-        [String]$AccessKeyID,
-
-        [String]$SecretAccessKey,
-
         [Switch]$NoCache,
 
         [String]$BaseNinjaAPIURI = "https://api.ninjarmm.com"
 
     )
 
+    #Get the API Keys
+    Try {
+        
+        $Key = Get-NinjaAPIKeys
+        Write-Debug "Using Nija API Keys: "
+        Write-Debug $Key
+        Write-Verbose "Using Nija API Keys: "
+        Write-Verbose $Key
+
+    } 
+    
+    Catch {
+        
+        Break    
+            
+    }
+    
     #Caching Variables
     $CacheTimeout = 10 #In Minutes
     $TranslatedCacheFileName = $Resource.replace("/","-").TrimStart("-") + ".xml"
@@ -69,7 +82,7 @@ Function Invoke-NinjaAPIRequest {
 
         }
                 
-        $Header = New-NinjaRequestHeader -HTTPVerb $HTTPVerb -Resource $Resource -AccessKeyID $AccessKeyID -SecretAccessKey $SecretAccessKey
+        $Header = New-NinjaRequestHeader -HTTPVerb $HTTPVerb -Resource $Resource -AccessKeyID $Key.AccessKeyID -SecretAccessKey $Key.SecretAccessKey
         
         Try {
         

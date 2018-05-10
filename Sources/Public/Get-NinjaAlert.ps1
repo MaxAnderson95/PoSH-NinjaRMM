@@ -104,21 +104,6 @@ Function Get-NinjaAlert {
         Write-Debug "DeviceID: $DeviceID"
         Write-Debug "DeviceName: $DeviceName"
         Write-Debug "All Devices: $AllDevices"
-
-        #Define the AccessKeyID and SecretAccessKeys
-        Try {
-            
-            $Keys = Get-NinjaAPIKeys
-            Write-Debug "Using Nija API Keys: "
-            Write-Debug $Keys
-
-        } 
-        
-        Catch {
-            
-            Break    
-                
-        }
     
         #Create an empty output array
         $OutputArray = @()
@@ -135,13 +120,13 @@ Function Get-NinjaAlert {
 
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts
 
                     }
 
@@ -158,13 +143,13 @@ Function Get-NinjaAlert {
                     
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts 
 
                     }
                     
@@ -181,13 +166,13 @@ Function Get-NinjaAlert {
 
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts 
 
                     }
 
@@ -204,13 +189,13 @@ Function Get-NinjaAlert {
 
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts 
 
                     }
 
@@ -225,13 +210,13 @@ Function Get-NinjaAlert {
 
                 If ($NoCache) {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -NoCache
                 
                 }
 
                 Else {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts/since/$SinceAlertID 
 
                 }
 
@@ -243,13 +228,13 @@ Function Get-NinjaAlert {
 
                 If ($NoCache) {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -NoCache
 
                 }
                 
                 Else {
                     
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/alerts 
                 
                 }
                 

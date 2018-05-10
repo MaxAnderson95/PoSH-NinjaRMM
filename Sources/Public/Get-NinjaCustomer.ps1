@@ -100,13 +100,13 @@ Function Get-NinjaCustomer {
                     
                     If ($NoCache) {
                     
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -NoCache
                     
                     }
 
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID"
 
                     }
 
@@ -122,13 +122,13 @@ Function Get-NinjaCustomer {
                 
                     If ($NoCache) {
                         
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -NoCache
                     
                     }
                     
                     Else {
 
-                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers"
 
                     }
 
@@ -143,13 +143,13 @@ Function Get-NinjaCustomer {
                                 
                 If ($NoCache) {
                 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey -NoCache
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -NoCache
                 
                 }
 
                 Else {
 
-                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -AccessKeyID $Keys.AccessKeyID -SecretAccessKey $Keys.SecretAccessKey
+                    $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers"
 
                 }
 
