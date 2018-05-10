@@ -14,8 +14,10 @@ Function Get-NinjaTimeStamp {
 
     #>
         
+    #Uses Get-Date recursively within Get-Date so that the formatting can be applied and so that the time can be converted to UTC.
     $Date = Get-Date -date $(Get-Date).ToUniversalTime() -Format r
     
+    #Outputs the Date String
     Write-Output $Date
 
 }

@@ -3,13 +3,68 @@ Function Get-NinjaCustomer {
     <#
 
     .SYNOPSIS
-        
+        Gets a list of customers or a specific customer in Ninja
 
     .DESCRIPTION
-        
+        Gets a list of customers or a speficic customer in Ninja, either by ID or Name.
+
+    .PARAMETER AllCustomers
+        Requests all customers. This is the default parameter set
+
+    .PARAMETER CustomerID
+        Accepts one or multiple customer id's to return
+
+    .PARAMETER CustomerName
+        Accepts one or multiple customer names to return
+
+    .PARAMETER NoCache
+        Requests live data from the API rather than utilizing any available cache
+    
+    .EXAMPLE
+        PS C:> Get-NinjaCustomer
+        id name                                 description
+        -- ----                                 -----------
+        1  Internal Infrastructure              Internal Infrastructure
+        2  ABC Painting                         Painting Company
+        3  123 Travel                           Travel Company
+        4  XYZ Web Design                       Web Design Company
 
     .EXAMPLE
-        
+        PS C:> Get-NinjaCustomer -AllCustomers
+        id name                                 description
+        -- ----                                 -----------
+        1  Internal Infrastructure              Internal Infrastructure
+        2  ABC Painting                         Painting Company
+        3  123 Travel                           Travel Company
+        4  XYZ Web Design                       Web Design Company
+
+    .EXAMPLE
+        PS C:> Get-NinjaCustomer -CustomerID 2,3
+        id name                                 description
+        -- ----                                 -----------
+        2  ABC Painting                         Painting Company
+        3  123 Travel                           Travel Company
+
+    .EXAMPLE
+        PS C:> 2,3 | Get-NinjaCustomer
+        id name                                 description
+        -- ----                                 -----------
+        2  ABC Painting                         Painting Company
+        3  123 Travel                           Travel Company
+
+    .EXAMPLE
+        PS C:> Get-NinjaCustomer -CustomerName "123 Travel", "XYZ Web Design"
+        id name                                 description
+        -- ----                                 -----------
+        3  123 Travel                           Travel Company
+        4  XYZ Web Design                       Web Design Company
+
+    .EXAMPLE
+        PS C:> "123 Travel", "XYZ Web Design" | Get-NinjaCustomer
+        id name                                 description
+        -- ----                                 -----------
+        3  123 Travel                           Travel Company
+        4  XYZ Web Design                       Web Design Company
 
     #>
 
@@ -70,34 +125,24 @@ Function Get-NinjaCustomer {
         Write-Debug "All Customers: $AllCustomers"
         Write-Debug "NoCache: $NoCache"
         
-        #Define the AccessKeyID and SecretAccessKeys
-        Try {
-
-            $Keys = Get-NinjaAPIKeys
-            Write-Debug "Using Nija API Keys: "
-            Write-Debug $Keys
-        
-        } 
-        
-        Catch {
-            
-            Break
-        
-        }
-
         #Create an empty output array
         $OutputArray = @()
         
     }
 
+    #ForEach piped in object
     Process {
 
+        #Based on which parameter set is being used, do the following
         Switch ($PSCmdlet.ParameterSetName) {
 
             "CustomerID" {
                                 
+                #Loop through each CustomerID
                 ForEach ($ID in $CustomerID) {
                     
+                #Make the request and add NoCache if the switch is specified
+
                     If ($NoCache) {
                     
                         $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers/$ID" -NoCache
@@ -110,6 +155,7 @@ Function Get-NinjaCustomer {
 
                     }
 
+                    #Add the rest response to the output array
                     $OutputArray += $Rest
 
                 }
@@ -118,8 +164,11 @@ Function Get-NinjaCustomer {
 
             "CustomerName" {
                                 
+                #Loop through each CustomerName
                 ForEach ($Name in $CustomerName) {
                 
+                #Make the request and add NoCache if the switch is specified
+
                     If ($NoCache) {
                         
                         $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -NoCache
@@ -132,7 +181,9 @@ Function Get-NinjaCustomer {
 
                     }
 
+                    #Since the API doesn't have the ability to requset data for a specific customer by name, this makes a standard request, and then uses Where-Object to filter the results.
                     $Rest = $Rest | Where-Object { $_.Name -like "*$Name*" }
+                    #Add the rest response to the output array
                     $OutputArray += $Rest
 
                 }
@@ -140,7 +191,9 @@ Function Get-NinjaCustomer {
             }
 
             "AllCustomers" {
-                                
+            
+            #Make the request and add NoCache if the switch is specified
+
                 If ($NoCache) {
                 
                     $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource "/v1/customers" -NoCache
@@ -153,6 +206,7 @@ Function Get-NinjaCustomer {
 
                 }
 
+                #Add the rest response to the output array
                 $OutputArray += $Rest
 
             }
@@ -163,6 +217,7 @@ Function Get-NinjaCustomer {
 
     End {
         
+        #Output the OutputArray
         Write-Output $OutputArray
 
     }
