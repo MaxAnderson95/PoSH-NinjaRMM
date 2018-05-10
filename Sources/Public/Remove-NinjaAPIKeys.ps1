@@ -20,7 +20,7 @@ Function Remove-NinjaApiKeys {
 
         Switch ($result) {
             0 { Remove-Item -Path "HKLM:\Software\PoSHNinjaRMM" -Force -ErrorAction SilentlyContinue }
-            1 { Write-Output "Did NOT remove API keys." }
+            1 { Write-Output "API Keys not removed." }
             
         }
 
