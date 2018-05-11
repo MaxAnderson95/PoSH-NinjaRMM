@@ -24,6 +24,7 @@ Function Set-NinjaAPIKeys {
     PARAM (
         
         [Parameter(Mandatory=$True)]
+        #This looks for a string that has any combination of 20 upper case letters or digits.
         [ValidateScript({
             If ($_ -match '^[A-Z\d]{20}$') {
                 $True
@@ -34,6 +35,7 @@ Function Set-NinjaAPIKeys {
         [String]$AccessKeyID,
 
         [Parameter(Mandatory=$True)]
+        #This looks for a string that has any combination of 40 lower case letters or digits.
         [ValidateScript({
             If ($_ -match '^[a-z\d]{40}$') {
                 $True
