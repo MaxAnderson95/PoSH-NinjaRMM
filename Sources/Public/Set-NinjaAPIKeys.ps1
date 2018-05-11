@@ -19,12 +19,28 @@ Function Set-NinjaAPIKeys {
     
     #>
     
+    [CmdletBinding()]
+    
     PARAM (
         
         [Parameter(Mandatory=$True)]
+        [ValidateScript({
+            If ($_ -match '^[A-Z\d]{20}$') {
+                $True
+            } Else {
+                Throw "$_ is not a valid Ninja Access Key ID!"
+            }
+        })]
         [String]$AccessKeyID,
 
         [Parameter(Mandatory=$True)]
+        [ValidateScript({
+            If ($_ -match '^[a-z\d]{40}$') {
+                $True
+            } Else {
+                Throw "$_ is not a valid Ninja Secret Access Key!"
+            }
+        })]
         [String]$SecretAccessKey
 
     )
