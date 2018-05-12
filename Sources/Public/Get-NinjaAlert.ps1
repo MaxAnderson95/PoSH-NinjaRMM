@@ -277,7 +277,16 @@ Function Get-NinjaAlert {
         [Parameter(ParameterSetName='CustomerID',Position=1)]
         [Parameter(ParameterSetName='SinceAlert',Position=1)]
         [Parameter(ParameterSetName='AllAlerts',Position=1)]
-        [Switch]$NoCache
+        [Switch]$NoCache,
+
+        #Raw Data
+        [Parameter(ParameterSetName='DeviceName',Position=1)]
+        [Parameter(ParameterSetName='DeviceID',Position=1)]
+        [Parameter(ParameterSetName='CustomerName',Position=1)]
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
+        [Parameter(ParameterSetName='SinceAlert',Position=1)]
+        [Parameter(ParameterSetName='AllAlerts',Position=1)]
+        [Switch]$RawOutput
 
     )
 
@@ -460,9 +469,68 @@ Function Get-NinjaAlert {
 
     End {
 
-        #Output the OutputArray
-        Write-Output $OutputArray
+        If ($RawOutput) {
+         
+            Write-Output $OutputArray
+        
+        }
 
+        Else {
+
+            <#
+            Reformat the raw output into a "cleaner looking" object. 
+            The primary purpose of this is to rename the property names for the 
+            purposes of pineline input into other functions
+            #>
+
+            #Create an empty aray
+            $FormattedArray = @()
+
+            ForEach ($Line in $OutputArray) {
+
+                $Obj = [PSCustomObject] @{
+
+                    "AlertID"      = $Line.id
+                    "AlertType"    = $Line.type
+                    "AlertStatus"  = $Line.status
+                    "AlertMessage" = $Line.message
+                    "Data"         = $Line.data
+                    "Severity"     = $Line.severity
+                    "Result"       = $Line.result
+                    "Source"       = $Line.source
+                    "OSUserName"   = $Line.os_user_name
+                    "TimeStamp"    = $Line.timestamp
+                    "CanReset"     = $Line.can_reset
+                    "Device"       = [PSCustomObject]@{
+                        "DeviceID"            = $Line.device.id
+                        "DeviceType"          = $Line.device.type
+                        "DeviceSubRoll"       = $Line.device.sub_roll
+                        "DeviceRoll"          = $Line.device.roll
+                        "CustomerID"          = $Line.device.customer_id
+                        "ParentDeviceID"      = $Line.device.parent_device_id
+                        "DisplayName"         = $Line.device.display_name
+                        "DNSName"             = $Line.device.dns_name
+                        "SystemName"          = $Line.device.system_name
+                        "NetBIOSName"         = $Line.device.netbios_name
+                        "LastOnline"          = $Line.device.last_online
+                        "LastUpdate"          = $Line.device.last_update
+                    }
+                    "Customer"     = [PSCustomObject]@{
+                        "CustomerID"          = $Line.customer.id
+                        "CustomerName"        = $Line.customer.name
+                        "CustomerDescription" = $Line.customer.description
+                    }
+
+                }
+                
+                $FormattedArray += $Obj
+
+            }
+            
+            Write-Output $FormattedArray
+
+        }
+    
     }
 
 }
