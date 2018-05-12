@@ -501,7 +501,7 @@ Function Get-NinjaAlert {
                     "OSUserName"   = $Line.os_user_name
                     "TimeStamp"    = $Line.timestamp
                     "CanReset"     = $Line.can_reset
-                    "Device"       = [PSCustomObject]@{
+                    "Device"       = [PSCustomObject] @{
                         "DeviceID"            = $Line.device.id
                         "DeviceType"          = $Line.device.type
                         "DeviceSubRoll"       = $Line.device.sub_roll
@@ -515,7 +515,7 @@ Function Get-NinjaAlert {
                         "LastOnline"          = $Line.device.last_online
                         "LastUpdate"          = $Line.device.last_update
                     }
-                    "Customer"     = [PSCustomObject]@{
+                    "Customer"     = [PSCustomObject] @{
                         "CustomerID"          = $Line.customer.id
                         "CustomerName"        = $Line.customer.name
                         "CustomerDescription" = $Line.customer.description
