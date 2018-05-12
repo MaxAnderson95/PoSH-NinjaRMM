@@ -235,7 +235,7 @@ Function Get-NinjaCustomer {
                 "CustomerDescription" = $Line.description
 
             }
-            Write-Debug "Line 237"
+            
             $FormattedArray += $Obj
 
         }
