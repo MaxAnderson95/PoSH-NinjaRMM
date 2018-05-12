@@ -112,7 +112,13 @@ Function Get-NinjaCustomer {
         [Parameter(ParameterSetName='CustomerID',Position=1)]
         [Parameter(ParameterSetName='CustomerName',Position=1)]
         [Parameter(ParameterSetName='AllCustomers',Position=1)]
-        [Switch]$NoCache
+        [Switch]$NoCache,
+
+        #Raw output
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
+        [Parameter(ParameterSetName='CustomerName',Position=1)]
+        [Parameter(ParameterSetName='AllCustomers',Position=1)]
+        [Switch]$RawOutput
 
     )
     
@@ -217,30 +223,40 @@ Function Get-NinjaCustomer {
 
     End {
 
-        <#
-        Reformat the raw output into a "cleaner looking" object. 
-        The primary purpose of this is to rename the property names for the 
-        purposes of pineline input into other functions
-        #>
+        If ($RawOutput) {
 
-        #Create an empty aray
-        $FormattedArray = @()
+            Write-Output $OutputArray
 
-        ForEach ($Line in $OutputArray) {
+        }
 
-            $Obj = [PSCustomObject] @{
+            Else {
 
-                "CustomerID" = $Line.id
-                "CustomerName" = $Line.name
-                "CustomerDescription" = $Line.description
+            <#
+            Reformat the raw output into a "cleaner looking" object. 
+            The primary purpose of this is to rename the property names for the 
+            purposes of pineline input into other functions
+            #>
+
+            #Create an empty aray
+            $FormattedArray = @()
+
+            ForEach ($Line in $OutputArray) {
+
+                $Obj = [PSCustomObject] @{
+
+                    "CustomerID" = $Line.id
+                    "CustomerName" = $Line.name
+                    "CustomerDescription" = $Line.description
+
+                }
+                
+                $FormattedArray += $Obj
 
             }
             
-            $FormattedArray += $Obj
+            Write-Output $FormattedArray
 
         }
-        
-        Write-Output $FormattedArray
 
     }
 
