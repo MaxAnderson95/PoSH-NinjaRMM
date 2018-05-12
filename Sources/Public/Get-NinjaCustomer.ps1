@@ -216,9 +216,31 @@ Function Get-NinjaCustomer {
     }
 
     End {
+
+        <#
+        Reformat the raw output into a "cleaner looking" object. 
+        The primary purpose of this is to rename the property names for the 
+        purposes of pineline input into other functions
+        #>
+
+        #Create an empty aray
+        $FormattedArray = @()
+
+        ForEach ($Line in $OutputArray) {
+
+            $Obj = [PSCustomObject] @{
+
+                "CustomerID" = $Line.id
+                "CustomerName" = $Line.name
+                "CustomerDescription" = $Line.description
+
+            }
+            Write-Debug "Line 237"
+            $FormattedArray += $Obj
+
+        }
         
-        #Output the OutputArray
-        Write-Output $OutputArray
+        Write-Output $FormattedArray
 
     }
 
