@@ -9,7 +9,7 @@ Function Set-NinjaAPIKeys {
             Sets the Ninja API Keys in JSON format to the key.json file in the root of the module folder
 
         .PARAMETER AccessKeyID
-        The public portion of the API key.
+        The public portion of the API key. It will ensure that it is a valid Access Key ID from Ninja.
 
         .PARAMETER SecretAccessKey
         The private portion of the API key.
