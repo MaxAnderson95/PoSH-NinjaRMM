@@ -331,7 +331,7 @@ Function Get-NinjaDevice {
                     "NinjaURL"         = $Line.ninja_url
                     "RemoteControlURL" = $Line.remote_control_url
                     "LastLoggedInUser" = $Line.last_logged_in_user
-                    "System"           = @{
+                    "System"           = [PsCustomObject] @{
                         "Manufacturer"      = $Line.system.manufacturer
                         "Name"              = $Line.system.name
                         "Model"             = $Line.system.model
@@ -339,7 +339,7 @@ Function Get-NinjaDevice {
                         "BIOSSerialNumber"  = $Line.system.bios_serial_number
                         "Domain"            = $Line.system.domain
                     }
-                    "OS"               = @{
+                    "OS"               = [PsCustomObject] @{
                         "Manufacturer"      = $Line.os.manufacturer
                         "Name"              = $Line.os.name
                         "OSArchitecture"    = $Line.os.os_architecture
@@ -347,10 +347,10 @@ Function Get-NinjaDevice {
                         "BuildNumber"       = $Line.os.build_number
                         "ReleaseID"         = $Line.os.releaseid
                     }
-                    "Memory"           = @{
+                    "Memory"           = [PsCustomObject] @{
                         "Capacity"          = $Line.memory.capacity
                     }
-                    "Processor"        = @{
+                    "Processor"        = [PsCustomObject] @{
                         "Architecture"      = $Line.processor.architecture
                         "CurrentClockSpeed" = $Line.processor.current_clock_speed
                         "MaxClockSpeed"     = $Line.processor.max_clock_speed
