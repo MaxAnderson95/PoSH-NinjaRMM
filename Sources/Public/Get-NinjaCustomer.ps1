@@ -229,7 +229,7 @@ Function Get-NinjaCustomer {
 
         }
 
-            Else {
+        Else {
 
             <#
             Reformat the raw output into a "cleaner looking" object. 
