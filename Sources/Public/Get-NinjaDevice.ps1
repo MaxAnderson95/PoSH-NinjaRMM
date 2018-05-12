@@ -180,7 +180,13 @@ Function Get-NinjaDevice {
         [Parameter(ParameterSetName='DeviceID',Position=1)]
         [Parameter(ParameterSetName='DeviceName',Position=1)]
         [Parameter(ParameterSetName='AllDevices',Position=1)]
-        [Switch]$NoCache
+        [Switch]$NoCache,
+
+        #Raw output
+        [Parameter(ParameterSetName='DeviceID',Position=1)]
+        [Parameter(ParameterSetName='DeviceName',Position=1)]
+        [Parameter(ParameterSetName='AllDevices',Position=1)]
+        [Switch]$RawOutput
     
     )
 
@@ -286,8 +292,84 @@ Function Get-NinjaDevice {
 
     End {
         
-        #Output the OutputArray
-        Write-Output $OutputArray
+        If ($RawOutput) {
+
+            Write-Output $OutputArray
+
+        } 
+        
+        Else {
+        
+            <#
+            Reformat the raw output into a "cleaner looking" object. 
+            The primary purpose of this is to rename the property names for the 
+            purposes of pineline input into other functions
+            #>
+
+            #Create an empty aray
+            $FormattedArray = @()
+
+            ForEach ($Line in $OutputArray) {
+
+                $Obj = [PSCustomObject] @{
+
+                    "DeviceID"         = $Line.id
+                    "DeviceType"       = $Line.type
+                    "DeviceSubType"    = $Line.sub_type
+                    "DeviceRole"       = $Line.role
+                    "CustomerID"       = $Line.customer_id
+                    "ParentDeviceID"   = $Line.parent_device_id
+                    "DisplayName"      = $Line.display_name
+                    "DNSName"          = $Line.dns_name
+                    "SystemName"       = $Line.system_name
+                    "NetBIOSName"      = $Line.netbios_name
+                    "LastOnline"       = $Line.last_online
+                    "LastUpdate"       = $Line.last_update
+                    "IPAddresses"      = $Line.ip_addresses
+                    "MACAddresses"     = $Line.mac_addresses
+                    "PublicIPAddress"  = $Line.public_ip_addr
+                    "NinjaURL"         = $Line.ninja_url
+                    "RemoteControlURL" = $Line.remote_control_url
+                    "LastLoggedInUser" = $Line.last_logged_in_user
+                    "System"           = @{
+                        "Manufacturer"      = $Line.system.manufacturer
+                        "Name"              = $Line.system.name
+                        "Model"             = $Line.system.model
+                        "DNSHostName"       = $Line.system.dns_host_name
+                        "BIOSSerialNumber"  = $Line.system.bios_serial_number
+                        "Domain"            = $Line.system.domain
+                    }
+                    "OS"               = @{
+                        "Manufacturer"      = $Line.os.manufacturer
+                        "Name"              = $Line.os.name
+                        "OSArchitecture"    = $Line.os.os_architecture
+                        "LastBootTime"      = $Line.os.last_boot_time
+                        "BuildNumber"       = $Line.os.build_number
+                        "ReleaseID"         = $Line.os.releaseid
+                    }
+                    "Memory"           = @{
+                        "Capacity"          = $Line.memory.capacity
+                    }
+                    "Processor"        = @{
+                        "Architecture"      = $Line.processor.architecture
+                        "CurrentClockSpeed" = $Line.processor.current_clock_speed
+                        "MaxClockSpeed"     = $Line.processor.max_clock_speed
+                        "Name"              = $Line.processor.name
+                        "Cores"             = $Line.processor.num_cores
+                        "LogicalCores"      = $Line.processor.num_logical_cores
+                    }
+                    "Disks"            = $Line.disks
+                    "Software"         = $Line.software
+
+                }
+                
+                $FormattedArray += $Obj
+
+            }
+            
+            Write-Output $FormattedArray
+
+        }
 
     }
 
