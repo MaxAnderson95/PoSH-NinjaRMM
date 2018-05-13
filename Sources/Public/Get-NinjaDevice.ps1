@@ -148,8 +148,7 @@ Function Get-NinjaDevice {
         #Returns a device by ID
         [Parameter(
             
-            ParameterSetName='DeviceID',    
-            ValueFromPipeline=$True,
+            ParameterSetName='DeviceID',
             ValueFromPipelineByPropertyName=$True, 
             Position=0
             
@@ -162,7 +161,6 @@ Function Get-NinjaDevice {
         [Parameter(
             
             ParameterSetName='DeviceName',
-            ValueFromPipeline=$True,
             ValueFromPipelineByPropertyName=$True, 
             Position=0
             
@@ -170,6 +168,16 @@ Function Get-NinjaDevice {
         [ValidateNotNullOrEmpty()]
         [Alias("Name")] 
         [String[]]$DeviceName,
+
+        #Returns all devices for a customer by customer ID
+        [Parameter(
+
+            ParameterSetName='CustomerID',
+            ValueFromPipelineByPropertyName=$True,
+            Position=0
+
+        )]
+        [String[]]$CustomerID,
 
         #Returns all devices
         [Parameter(ParameterSetName='AllDevices')]
@@ -179,26 +187,20 @@ Function Get-NinjaDevice {
         #Whether to force the query of live API data
         [Parameter(ParameterSetName='DeviceID',Position=1)]
         [Parameter(ParameterSetName='DeviceName',Position=1)]
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
         [Parameter(ParameterSetName='AllDevices',Position=1)]
         [Switch]$NoCache,
 
         #Raw output
         [Parameter(ParameterSetName='DeviceID',Position=1)]
         [Parameter(ParameterSetName='DeviceName',Position=1)]
+        [Parameter(ParameterSetName='CustomerID',Position=1)]
         [Parameter(ParameterSetName='AllDevices',Position=1)]
         [Switch]$RawOutput
     
     )
 
     Begin {
-        
-        Write-Verbose -Message "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
-        Write-Debug "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
-        Write-Debug "Provided Parameter values are"    
-        Write-Debug "DeviceID: $DeviceID"
-        Write-Debug "DeviceName: $DeviceName"
-        Write-Debug "All Devices: $AllDevices"
-        Write-Debug "NoCache: $NoCache"
 
         #Create an empty output array
         $OutputArray = @()
@@ -208,10 +210,21 @@ Function Get-NinjaDevice {
     #ForEach piped in object
     Process {
         
+        Write-Verbose "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
+        Write-Debug "Parameter Set name being used is $($PSCmdlet.ParameterSetName)"
+        Write-Debug "Provided Parameter values are"    
+        Write-Debug "DeviceID: $DeviceID"
+        Write-Debug "DeviceName: $DeviceName"
+        Write-Debug "CustomerID: $CustomerID"
+        Write-Debug "All Devices: $AllDevices"
+        Write-Debug "NoCache: $NoCache"
+
         #Based on which parameter set is being used, do the following
         Switch ($PSCmdlet.ParameterSetName) {
             
             "DeviceID" {
+
+                Write-Debug "Switch selection is DeviceID"
 
                 #Loop through each DeviceID
                 ForEach ($ID in $DeviceID) {
@@ -239,6 +252,8 @@ Function Get-NinjaDevice {
 
             "DeviceName" {
 
+                Write-Debug "Switch selection is DeviceName"
+
                 #Loop through each DeviceName
                 ForEach ($Name in $DeviceName) {
 
@@ -265,9 +280,41 @@ Function Get-NinjaDevice {
 
             }
 
+            "CustomerID" {
+
+                Write-Debug "Switch selection is CustomerID"
+
+                #Loop through each CustomerID
+                ForEach ($ID in $CustomerID) {
+
+                #Make the request and add NoCache if the switch is specified
+                    
+                    If ($NoCache) {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -NoCache
+
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices
+
+                    }
+
+                    #Since the API doesn't have the ability to requset data for a specific device by customer ID, this makes a standard request, and then uses Where-Object to filter the results.
+                    $Rest = $Rest | Where-Object { $_.customer_id -eq $ID }
+                    #Add the rest response to the output array
+                    $OutputArray += $Rest
+
+                }
+
+            }
+
             "AllDevices" {
 
-            #Make the request and add NoCache if the switch is specified
+                Write-Debug "Switch selection is AllDevices"
+
+                #Make the request and add NoCache if the switch is specified
 
                 If ($NoCache) {
                 
