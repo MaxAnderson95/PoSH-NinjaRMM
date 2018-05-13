@@ -179,6 +179,16 @@ Function Get-NinjaDevice {
         )]
         [String[]]$CustomerID,
 
+        #Returns all devices for a customer by customer name
+        [Parameter(
+
+            ParameterSetName='CustomerName',
+            ValueFromPipelineByPropertyName=$True,
+            Position=0
+
+        )]
+        [String[]]$CustomerName,
+
         #Returns all devices
         [Parameter(ParameterSetName='AllDevices')]
         [Alias("All")] 
@@ -309,6 +319,43 @@ Function Get-NinjaDevice {
                 }
 
             }
+
+            "CustomerName" {
+
+                Write-Debug "Switch selection is CustomerName"
+
+                #Loop through each CustomerName
+                ForEach ($Name in $CustomerName) {
+
+                #Make the request and add NoCache if the switch is specified
+                    
+                    If ($NoCache) {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices -NoCache
+
+                    }
+
+                    Else {
+
+                        $Rest = Invoke-NinjaAPIRequest -HTTPVerb GET -Resource /v1/devices
+
+                    }
+
+                    #Since the API doesn't have the ability to requset data for a specific device by customer name, this makes a standard request, and then uses Where-Object to filter the results.
+                    
+                    <# Becuase the returned device object does not have a customer name property, only a customer ID property
+                    we must get the customerID from the name using Get-NinjaCustomer, then filter by that ID.#>
+                    
+                    $ID = (Get-NinjaCustomer -CustomerName $Name).CustomerID
+                    
+                    $Rest = $Rest | Where-Object { $_.customer_id -eq $ID }
+                    #Add the rest response to the output array
+                    $OutputArray += $Rest
+
+                }
+
+            }
+
 
             "AllDevices" {
 
