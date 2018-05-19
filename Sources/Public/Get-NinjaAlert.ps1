@@ -499,7 +499,7 @@ Function Get-NinjaAlert {
                     "Result"       = $Line.result
                     "Source"       = $Line.source
                     "OSUserName"   = $Line.os_user_name
-                    "TimeStamp"    = $Line.timestamp
+                    "TimeStamp"    = [DateTime]::ParseExact($Line.timestamp, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
                     "CanReset"     = $Line.can_reset
                     "Device"       = [PSCustomObject] @{
                         "DeviceID"            = $Line.device.id
@@ -512,8 +512,8 @@ Function Get-NinjaAlert {
                         "DNSName"             = $Line.device.dns_name
                         "SystemName"          = $Line.device.system_name
                         "NetBIOSName"         = $Line.device.netbios_name
-                        "LastOnline"          = $Line.device.last_online
-                        "LastUpdate"          = $Line.device.last_update
+                        "LastOnline"          = [DateTime]::ParseExact($Line.device.last_online, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
+                        "LastUpdate"          = [DateTime]::ParseExact($Line.device.last_update, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
                     }
                     "Customer"     = [PSCustomObject] @{
                         "CustomerID"          = $Line.customer.id

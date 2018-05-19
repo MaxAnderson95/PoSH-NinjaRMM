@@ -417,8 +417,8 @@ Function Get-NinjaDevice {
                     "DNSName"          = $Line.dns_name
                     "SystemName"       = $Line.system_name
                     "NetBIOSName"      = $Line.netbios_name
-                    "LastOnline"       = $Line.last_online
-                    "LastUpdate"       = $Line.last_update
+                    "LastOnline"       = [DateTime]::ParseExact($Line.last_online, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
+                    "LastUpdate"       = [DateTime]::ParseExact($Line.last_update, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
                     "IPAddresses"      = $Line.ip_addresses
                     "MACAddresses"     = $Line.mac_addresses
                     "PublicIPAddress"  = $Line.public_ip_addr
@@ -437,7 +437,7 @@ Function Get-NinjaDevice {
                         "Manufacturer"      = $Line.os.manufacturer
                         "Name"              = $Line.os.name
                         "OSArchitecture"    = $Line.os.os_architecture
-                        "LastBootTime"      = $Line.os.last_boot_time
+                        "LastBootTime"      = [DateTime]::ParseExact($Line.os.last_boot_time, 'ddd, dd MMM yyyy H:mm:ss GMT', $null)
                         "BuildNumber"       = $Line.os.build_number
                         "ReleaseID"         = $Line.os.releaseid
                     }
@@ -481,7 +481,7 @@ Function Get-NinjaDevice {
                                 "Name"        = $Product.name
                                 "Publisher"   = $Product.publisher
                                 "Version"     = $Product.version
-                                "InstallDate" = $Product.install_date
+                                "InstallDate" = [DateTime]::ParseExact($Product.install_date, 'yyyyMMdd', $null)
                                 "Size"        = $Product.size
 
                             }
