@@ -25,24 +25,24 @@ Function Set-NinjaAPIKeys {
         
         [Parameter(Mandatory=$True)]
         #This looks for a string that has any combination of 20 upper case letters or digits.
-        [ValidateScript({
-            If ($_ -match '^[A-Z\d]{20}$') {
-                $True
-            } Else {
-                Throw "$_ is not a valid Ninja Access Key ID!"
-            }
-        })]
+        #[ValidateScript({
+        #    If ($_ -match '^[A-Z\d]{20}$') {
+        #        $True
+        #    } Else {
+        #        Throw "$_ is not a valid Ninja Access Key ID!"
+        #    }
+        #})]
         [String]$AccessKeyID,
 
         [Parameter(Mandatory=$True)]
         #This looks for a string that has any combination of 40 lower case letters or digits.
-        [ValidateScript({
-            If ($_ -match '^[a-z\d]{40}$') {
-                $True
-            } Else {
-                Throw "$_ is not a valid Ninja Secret Access Key!"
-            }
-        })]
+        #[ValidateScript({
+        #    If ($_ -match '^[a-z\d]{40}$') {
+        #        $True
+        #    } Else {
+        #        Throw "$_ is not a valid Ninja Secret Access Key!"
+        #    }
+        #})]
         [String]$SecretAccessKey
 
     )
