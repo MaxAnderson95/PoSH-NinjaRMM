@@ -452,8 +452,43 @@ Function Get-NinjaDevice {
                         "Cores"             = $Line.processor.num_cores
                         "LogicalCores"      = $Line.processor.num_logical_cores
                     }
-                    "Disks"            = $Line.disks
-                    "Software"         = $Line.software
+                    "Disks"            = $(
+                        
+                        ForEach ($Disk in $Line.disks) {
+
+                                [PsCustomObject] @{
+
+                                    "Name"         = $Disk.name
+                                    "Type"         = $Disk.type
+                                    "FileSystem"   = $Disk.file_system
+                                    "SerialNumber" = $Disk.serial_number
+                                    "VolumeLabel"  = $Disk.volume_label
+                                    "Capacity"     = $Disk.capacity
+                                    "FreeSpace"    = $Disk.free_space
+
+                                }
+
+                            }
+
+                        )
+
+                    "Software"         = $(
+
+                        ForEach ($Product in $Line.software) {
+
+                            [PsCustomObject] @{
+
+                                "Name"        = $Product.name
+                                "Publisher"   = $Product.publisher
+                                "Version"     = $Product.version
+                                "InstallDate" = $Product.install_date
+                                "Size"        = $Product.size
+
+                            }
+
+                        }
+
+                    )
 
                 }
                 
