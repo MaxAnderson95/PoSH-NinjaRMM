@@ -1,3 +1,5 @@
+*Note:* This project is no longer being maintanted. I no longer have access to a NinjaRMM instance to continue development. Please feel free to fork and continue development if you'd like!
+
 # PowerShell NinjaRMM Management Module
 This module is a collection of cmdlets that allow you to query and manage your NinjaRMM environment with PowerShell.
 
